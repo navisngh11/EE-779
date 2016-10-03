@@ -1,0 +1,9 @@
+function [Rx,a,err] = AR_Autocorr_param(data,p) 
+rx = findAutocorr(data);
+[X,Rx] = corrmtx(data,p,'autocorrelation');
+Rx_part = Rx(2:end,2:end);
+b = -1*rx(2:p+1).';
+a_p = (Rx_part)\b;
+a = [1;a_p];
+c = Rx*a;
+err = c(1);

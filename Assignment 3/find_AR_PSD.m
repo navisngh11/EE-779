@@ -1,0 +1,9 @@
+function[AR_PSD,freq] = find_AR_PSD(b,a)
+%[AR_PSD,freq] = freqz(b,a,'whole',1024);
+[AR_PSD,freq] = freqz(b,a,'whole',2048);
+AR_PSD = fftshift(AR_PSD);
+AR_PSD = abs(AR_PSD).^2;
+%AR_PSD = AR_PSD(513:1024);
+AR_PSD = AR_PSD(1025:2048);
+freq = freq-pi;
+freq = freq(1025:2048);

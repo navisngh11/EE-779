@@ -6,7 +6,7 @@
    <!--
 This HTML was auto-generated from MATLAB code.
 To make changes, update the MATLAB code and republish this document.
-      --><title>code</title><meta name="generator" content="MATLAB 8.6"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2016-08-16"><meta name="DC.source" content="code.m"><style type="text/css">
+      --><title>code</title><meta name="generator" content="MATLAB 8.6"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2016-09-26"><meta name="DC.source" content="code.m"><style type="text/css">
 html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
 
 html { min-height:100%; margin-bottom:1px; }
@@ -109,7 +109,7 @@ saveas(fig,<span class="string">'./results/per_PSD_512.jpg'</span>,<span class="
 <span class="comment">% frequency components) is improved.</span>
 <span class="comment">% The variance of the periodogram remains constant irrespective of N.</span>
 <span class="comment">% For lower value of N, PSD estimate is smoother.</span>
-</pre><img vspace="5" hspace="5" src="code_01.png" alt=""> <img vspace="5" hspace="5" src="code_02.png" alt=""> <h2>Welch Method for PSD<a name="3"></a></h2><pre class="codeinput">fft_len=1024;
+</pre><h2>Welch Method for PSD<a name="3"></a></h2><pre class="codeinput">fft_len=1024;
 N=512;
 freq = linspace(-pi,pi,fft_len);
 
@@ -162,7 +162,7 @@ saveas(fig,<span class="string">'./results/welch_PSD_128.jpg'</span>,<span class
 <span class="comment">% * Plot for L = 32 is smoother compared that of L=128.</span>
 <span class="comment">% * This depicts the trade-off between resolution and</span>
 <span class="comment">% variance for the same method with different parameters.</span>
-</pre><img vspace="5" hspace="5" src="code_03.png" alt=""> <img vspace="5" hspace="5" src="code_04.png" alt=""> <h2>Blackman Tukey Method for PSD<a name="4"></a></h2><pre class="codeinput">N = 512;
+</pre><h2>Blackman Tukey Method for PSD<a name="4"></a></h2><pre class="codeinput">N = 512;
 fft_len=1024;
 rx = findAutocov(data); <span class="comment">% calling function to return autocovariance seq</span>
 freq = linspace(-pi,pi,fft_len);
@@ -199,7 +199,7 @@ saveas(fig,<span class="string">'./results/blacktukey_PSD_32.jpg'</span>,<span c
 <span class="comment">% * Plot for M = 32 is smoother compared that of M=128.</span>
 <span class="comment">% * Depicts the trade-off between resolution and</span>
 <span class="comment">% variance for the same method with different parameters.</span>
-</pre><img vspace="5" hspace="5" src="code_05.png" alt=""> <img vspace="5" hspace="5" src="code_06.png" alt=""> <h2>Actual PSD (given Autocorrelation sequence)<a name="5"></a></h2><pre class="codeinput">fft_len = 1024;
+</pre><img vspace="5" hspace="5" src="code_03.png" alt=""> <img vspace="5" hspace="5" src="code_04.png" alt=""> <h2>Actual PSD (given Autocorrelation sequence)<a name="5"></a></h2><pre class="codeinput">fft_len = 1024;
 sigma_o = 1; <span class="comment">% given constants</span>
 rho = 0.95;
 freq = linspace(-pi,pi,fft_len);
@@ -230,7 +230,7 @@ title(<span class="string">'Autocorrelation function'</span>);
 xlabel(<span class="string">'n (time)'</span>);
 ylabel(<span class="string">'Autocorrelation'</span>)
 saveas(fig,<span class="string">'./results/actual_autocor.jpg'</span>,<span class="string">'jpg'</span>);
-</pre><img vspace="5" hspace="5" src="code_07.png" alt=""> <img vspace="5" hspace="5" src="code_08.png" alt=""> <h2>Comparing different methods<a name="6"></a></h2><p>Spectral estimation methods can be compared on the basis of trade-off between variance and resolution. Also changing parameters of the same method changes estimated spectrum (such parameters dependancies are mentioned above in comments section of above work). In terms of variance Periodogram method performs worst. More number of blocks for estimation reduces variance but shorter blocks imply resolution will be poorer. In case of Welch method, overlaping allows more number of blocks of given length, hence it outperforms periodogram and normal Bartlett (nonoverlapping) method. Blackman Tukey reduces variance by smoothening out the variations of the underlined single periodogram. On an average Blackman Tukey peroforms better than Welch and Periodogram due to low variance and better resolution.</p><h2>Different realizations<a name="7"></a></h2><p>Realizations of the same process are obtained by using difference equation so formed by given filter when white gaussian noise is given as an input to it.</p><pre class="codeinput">fig1 = figure;
+</pre><img vspace="5" hspace="5" src="code_05.png" alt=""> <img vspace="5" hspace="5" src="code_06.png" alt=""> <h2>Comparing different methods<a name="6"></a></h2><p>Spectral estimation methods can be compared on the basis of trade-off between variance and resolution. Also changing parameters of the same method changes estimated spectrum (such parameters dependancies are mentioned above in comments section of above work). In terms of variance Periodogram method performs worst. More number of blocks for estimation reduces variance but shorter blocks imply resolution will be poorer. In case of Welch method, overlaping allows more number of blocks of given length, hence it outperforms periodogram and normal Bartlett (nonoverlapping) method. Blackman Tukey reduces variance by smoothening out the variations of the underlined single periodogram. On an average Blackman Tukey peroforms better than Welch and Periodogram due to low variance and better resolution.</p><h2>Different realizations<a name="7"></a></h2><p>Realizations of the same process are obtained by using difference equation so formed by given filter when white gaussian noise is given as an input to it.</p><pre class="codeinput">fig1 = figure;
 fig2 = figure;
 rho = 0.95;
 len = 512;
@@ -266,7 +266,7 @@ len = 512;
 <span class="keyword">end</span>
 saveas(fig1,<span class="string">'./results/realizations_signal.jpg'</span>,<span class="string">'jpg'</span>);
 saveas(fig2,<span class="string">'./results/realizations_autocor.jpg'</span>,<span class="string">'jpg'</span>);
-</pre><img vspace="5" hspace="5" src="code_09.png" alt=""> <img vspace="5" hspace="5" src="code_10.png" alt=""> <p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2015b</a><br></p></div><!--
+</pre><p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2015b</a><br></p></div><!--
 ##### SOURCE BEGIN #####
 %% EE779 : Advanced Topics in Signal Processing 
 % _Please refer to relevant comments throughout the file_
