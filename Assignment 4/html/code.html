@@ -1,0 +1,384 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>EE779 : Advanced Topics in Signal Processing</title><meta name="generator" content="MATLAB 8.6"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2016-10-17"><meta name="DC.source" content="code.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>EE779 : Advanced Topics in Signal Processing</h1><!--introduction--><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#3">Question 1 : Comparison of Spatial Spectral Estimators</a></li><li><a href="#7">Q1 a) Theta = 15</a></li><li><a href="#8">Q1 a) Beamforming Method</a></li><li><a href="#10">Q1 a) Capon Method</a></li><li><a href="#12">Q1 a) Root-Music Estimate</a></li><li><a href="#14">Q1 a) ESPRIT Estimate</a></li><li><a href="#16">Q1 b) Theta = 7.5</a></li><li><a href="#17">Q1 b) Beamforming Method</a></li><li><a href="#19">Q1 b) Capon Method</a></li><li><a href="#21">Q1 b) Root-Music Estimate</a></li><li><a href="#23">Q1 b) ESPRIT Estimate</a></li><li><a href="#25">Q1 Conclusions</a></li><li><a href="#35">Question 2 : Spatial Spectral Estimators applied to Measured Data</a></li><li><a href="#36">Q2 Beamforming Method</a></li><li><a href="#38">Q2 Capon Method</a></li><li><a href="#40">Q2 Root-Music Estimate</a></li><li><a href="#41">Q2 ESPRIT Estimate</a></li><li><a href="#42">Q2 Conclusion</a></li><li><a href="#43">Written Assignment : Ques 2</a></li></ul></div><p><i>Submitted by</i> : <b>Navjot Singh (130110071)</b></p><pre class="codeinput">close <span class="string">all</span>
+clear <span class="string">all</span>
+</pre><p><i>(Used functions on beamforming,uladata and capon are courtesy of Petre Stoica (2005))</i></p><h2>Question 1 : Comparison of Spatial Spectral Estimators<a name="3"></a></h2><p>Because of the noise component in generation of the ULA data, we take 50 iterations of ULA data generation and average the final results.</p><p>In each iteration, we calculate a new ULA data set, the corresponding spectra via Beamforming, Capon's method. Also, we calculate the Direction of arrival estimates using the Root Music method as well as ESPRIT method.</p><pre class="language-matlab">
+<span class="keyword">function</span> [beamf,capon,root,esprit] = computeEstimates_q1(theta)
+P = eye(2);
+num_samp=128;
+y = zeros(10, 100, 50);
+beamf_phi = zeros(50, num_samp);
+capon_phi = zeros(50, num_samp);
+theta1 = zeros(50, 2);
+theta2 = zeros(50, 2);
+
+<span class="comment">% Because of the noise component in generation of the ULA data, we will</span>
+<span class="comment">% take fifty iterations of ULA data generation and average the final</span>
+<span class="comment">% results.</span>
+<span class="keyword">for</span> i=1:50,
+    y(:,:,i) = uladata([0, theta] ,P,100,1,10,0.5);
+    beamf_phi(i,:) = beamform(y(:,:,i), num_samp, 0.5);
+    capon_phi(i,:) = capon_sp(y(:,:,i), num_samp, 0.5);
+    theta1(i,:) = root_music_doa(y(:,:,i), 2, 0.5);
+    theta2(i,:) = esprit_doa(y(:,:,i), 2, 0.5);
+<span class="keyword">end</span> 
+phi1avg(1:num_samp) = mean(beamf_phi(:,1:num_samp));
+beamf = phi1avg;
+
+phi2avg(1:num_samp) = mean(capon_phi(:,1:num_samp));
+capon = phi2avg;
+
+root = theta1;
+
+esprit = theta2;
+
+</pre><h2>Q1 a) Theta = 15<a name="7"></a></h2><pre class="codeinput">[beamf_1,capon_1,root_theta_1,esprit_theta_1]=computeEstimates_q1(15);
+</pre><h2>Q1 a) Beamforming Method<a name="8"></a></h2><p>The function returns the average of the 50 sample sets taken. We plot this average power spectrum here.</p><pre class="codeinput">fig = figure;
+plot(20*log10(beamf_1))
+ylabel(<span class="string">'Power (dB)'</span>)
+title(<span class="string">'Averaged Spatial Spectrum: Beamforming method'</span>);
+xlabel(<span class="string">'n'</span>)
+set(gcf, <span class="string">'Position'</span>, get(0, <span class="string">'Screensize'</span>));
+saveas(fig,<span class="string">'./results/Q1/beamf_q1a.jpg'</span>,<span class="string">'jpg'</span>);
+</pre><img vspace="5" hspace="5" src="code_01.png" alt=""> <h2>Q1 a) Capon Method<a name="10"></a></h2><p>The function returns the average of the 50 sample sets taken. We plot this average power spectrum here.</p><pre class="codeinput">fig = figure;
+plot(20*log10(capon_1))
+ylabel(<span class="string">'Power (dB)'</span>)
+title(<span class="string">'Averaged Spatial Spectrum: Capon''s method'</span>);
+xlabel(<span class="string">'n'</span>)
+set(gcf, <span class="string">'Position'</span>, get(0, <span class="string">'Screensize'</span>));
+saveas(fig,<span class="string">'./results/Q1/capon_q1a.jpg'</span>,<span class="string">'jpg'</span>);
+</pre><img vspace="5" hspace="5" src="code_02.png" alt=""> <h2>Q1 a) Root-Music Estimate<a name="12"></a></h2><p>For Root-Music, we get an estimate for the direction of arrival. We see the spread of estimates by plotting the estimates from each data set with the same height.</p><pre class="codeinput">fig = figure;
+stem(root_theta_1(:), ones(100,1));
+title(<span class="string">'Root-Music method'</span>)
+xlabel(<span class="string">'Angle'</span>)
+set(gcf, <span class="string">'Position'</span>, get(0, <span class="string">'Screensize'</span>));
+saveas(fig,<span class="string">'./results/Q1/rootmusic_q1a.jpg'</span>,<span class="string">'jpg'</span>);
+</pre><img vspace="5" hspace="5" src="code_03.png" alt=""> <h2>Q1 a) ESPRIT Estimate<a name="14"></a></h2><p>For ESPRIT, we get an estimate for the direction of arrival. We see the spread of estimates by plotting the estimates from each data set with the same height.</p><pre class="codeinput">fig = figure;
+stem(esprit_theta_1(:), ones(100,1));
+title(<span class="string">'ESPRIT method'</span>)
+xlabel(<span class="string">'Angle'</span>)
+set(gcf, <span class="string">'Position'</span>, get(0, <span class="string">'Screensize'</span>));
+saveas(fig,<span class="string">'./results/Q1/esprit_q1a.jpg'</span>,<span class="string">'jpg'</span>);
+</pre><img vspace="5" hspace="5" src="code_04.png" alt=""> <h2>Q1 b) Theta = 7.5<a name="16"></a></h2><pre class="codeinput">[beamf_2,capon_2,root_theta_2,esprit_theta_2]=computeEstimates_q1(7.5);
+</pre><h2>Q1 b) Beamforming Method<a name="17"></a></h2><p>The function returns the average of the 50 sample sets taken. We plot this average power spectrum here.</p><pre class="codeinput">fig = figure;
+plot(20*log10(beamf_2))
+ylabel(<span class="string">'Power (dB)'</span>)
+title(<span class="string">'Averaged Spatial Spectrum: Beamforming method'</span>);
+xlabel(<span class="string">'n'</span>)
+set(gcf, <span class="string">'Position'</span>, get(0, <span class="string">'Screensize'</span>));
+saveas(fig,<span class="string">'./results/Q1/beamf_q1b.jpg'</span>,<span class="string">'jpg'</span>);
+</pre><img vspace="5" hspace="5" src="code_05.png" alt=""> <h2>Q1 b) Capon Method<a name="19"></a></h2><p>The function returns the average of the 50 sample sets taken. We plot this average power spectrum here.</p><pre class="codeinput">fig = figure;
+plot(20*log10(capon_2))
+ylabel(<span class="string">'Power (dB)'</span>)
+title(<span class="string">'Averaged Spatial Spectrum: Capon''s method'</span>);
+xlabel(<span class="string">'n'</span>)
+set(gcf, <span class="string">'Position'</span>, get(0, <span class="string">'Screensize'</span>));
+saveas(fig,<span class="string">'./results/Q1/capon_q1b.jpg'</span>,<span class="string">'jpg'</span>);
+</pre><img vspace="5" hspace="5" src="code_06.png" alt=""> <h2>Q1 b) Root-Music Estimate<a name="21"></a></h2><p>For Root-Music, we get an estimate for the direction of arrival. We see the spread of estimates by plotting the estimates from each data set with the same height.</p><pre class="codeinput">fig = figure;
+stem(root_theta_2(:), ones(100,1));
+title(<span class="string">'Root-Music method'</span>)
+xlabel(<span class="string">'Angle'</span>)
+set(gcf, <span class="string">'Position'</span>, get(0, <span class="string">'Screensize'</span>));
+saveas(fig,<span class="string">'./results/Q1/rootmusic_q1b.jpg'</span>,<span class="string">'jpg'</span>);
+</pre><img vspace="5" hspace="5" src="code_07.png" alt=""> <h2>Q1 b) ESPRIT Estimate<a name="23"></a></h2><p>For ESPRIT, we get an estimate for the direction of arrival. We see the spread of estimates by plotting the estimates from each data set with the same height.</p><pre class="codeinput">fig = figure;
+stem(esprit_theta_2(:), ones(100,1));
+title(<span class="string">'ESPRIT method'</span>)
+xlabel(<span class="string">'Angle'</span>)
+set(gcf, <span class="string">'Position'</span>, get(0, <span class="string">'Screensize'</span>));
+saveas(fig,<span class="string">'./results/Q1/esprit_q1b.jpg'</span>,<span class="string">'jpg'</span>);
+</pre><img vspace="5" hspace="5" src="code_08.png" alt=""> <h2>Q1 Conclusions<a name="25"></a></h2><p><img src="code_eq08288499342375314727.png" alt="$\theta$"> <b>=15</b> degree</p><div><ul><li>Each method gives a satisfactory result, i.e. the methods are able to resolve both the sources successfully.</li></ul></div><div><ul><li>The peaks in Capon's method are much sharper, leading to better estimate.</li></ul></div><div><ul><li>Comparing Root Music and ESPRIT, The Root Music estimates are much closer  together (implying less variance). The average value is also closer to  the actual value in case of Root Music</li></ul></div><div><ul><li>The properties of various time series estimators are rougly analogous to the temporal case, with Capon better than Beamforming, and, RootMusic better than ESPRIT</li></ul></div><p><img src="code_eq08288499342375314727.png" alt="$\theta$"> <b>=7.5</b> degree</p><div><ul><li>Beamforming is not able to resolve both the sources, it gives a single peak. Even in Capon's method, the resolution is not good. It gives, what appears to be a peak with 2 small humps on top.</li></ul></div><div><ul><li>Comparing Root Music and ESPRIT, The Root Music estimates are much closer together (implying less variance). In general, the values are much widely spread as compared to the previous value of theta=15.</li></ul></div><div><ul><li>The properties of various time series estimators are rougly analogous to the temporal case, with Capon better than Beamforming, and, Root Music better than ESPRIT</li></ul></div><h2>Question 2 : Spatial Spectral Estimators applied to Measured Data<a name="35"></a></h2><p>Loading the data from file submarine.mat</p><pre class="codeinput">load(<span class="string">'./data/submarine.mat'</span>);
+<span class="comment">% We get the measurements from the six sensors (4096 instances), the</span>
+<span class="comment">% distance between sensors and the wavelength of the source.</span>
+dl = d/lambda;
+</pre><h2>Q2 Beamforming Method<a name="36"></a></h2><pre class="codeinput">beamf = beamform(X, 180, dl);
+fig = figure;
+plot(20*log10(beamf))
+title(<span class="string">'Beamforming spatial spectrum'</span>)
+ylabel(<span class="string">'Power (dB)'</span>)
+xlabel(<span class="string">'angle+90deg'</span>)
+set(gcf, <span class="string">'Position'</span>, get(0, <span class="string">'Screensize'</span>));
+saveas(fig,<span class="string">'./results/Q2/beamf_q2.jpg'</span>,<span class="string">'jpg'</span>);
+</pre><img vspace="5" hspace="5" src="code_09.png" alt=""> <p>From the graphs we can see that there are 2 peaks implying 2 sources.</p><h2>Q2 Capon Method<a name="38"></a></h2><pre class="codeinput">capon = capon_sp(X, 180, dl);
+fig = figure;
+plot(20*log10(capon))
+title(<span class="string">'Capon''s method spatial spectrum'</span>)
+ylabel(<span class="string">'Power (dB)'</span>)
+xlabel(<span class="string">'angle+90deg'</span>)
+set(gcf, <span class="string">'Position'</span>, get(0, <span class="string">'Screensize'</span>));
+saveas(fig,<span class="string">'./results/Q2/capon_q2.jpg'</span>,<span class="string">'jpg'</span>);
+</pre><img vspace="5" hspace="5" src="code_10.png" alt=""> <p>From the graphs we can see that there are 2 peaks implying 2 sources.</p><h2>Q2 Root-Music Estimate<a name="40"></a></h2><p>Now, we use the no of sources (2) as input for the Root-Music method</p><pre class="codeinput">root_theta_q2 = root_music_doa(X, 2, dl)
+</pre><pre class="codeoutput">
+root_theta_q2 =
+
+  -36.9553
+   53.9747
+
+</pre><h2>Q2 ESPRIT Estimate<a name="41"></a></h2><p>Now, we use the no of sources (2) as input for the ESPRIT method</p><pre class="codeinput">esprit_theta_q2 = esprit_doa(X, 2, dl)
+</pre><pre class="codeoutput">
+esprit_theta_q2 =
+
+  -36.9432
+   53.7314
+
+</pre><h2>Q2 Conclusion<a name="42"></a></h2><p>The two submarines are located at angles of approx -36 degrees and 53 degrees respectively</p><h2>Written Assignment : Ques 2<a name="43"></a></h2><p>Plot for the beamforms for the L shaped array</p><p><img vspace="5" hspace="5" src="Plots_written_Q2.jpg" alt=""> </p><p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2015b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% EE779 : Advanced Topics in Signal Processing
+%%
+% _Submitted by_ : 
+% *Navjot Singh (130110071)*
+close all
+clear all
+%%
+% _(Used functions on beamforming,uladata and capon are courtesy of Petre Stoica (2005))_
+%% Question 1 : Comparison of Spatial Spectral Estimators
+%%
+% Because of the noise component in generation of the ULA data, we
+% take 50 iterations of ULA data generation and average the final
+% results.
+%%
+% In each iteration, we calculate a new ULA data set, the corresponding
+% spectra via Beamforming, Capon's method. Also, we calculate the Direction
+% of arrival estimates using the Root Music method as well as ESPRIT
+% method.
+%%
+% <include>computeEstimates_q1</include>
+%% Q1 a) Theta = 15
+[beamf_1,capon_1,root_theta_1,esprit_theta_1]=computeEstimates_q1(15);
+%% Q1 a) Beamforming Method
+%%
+% The function returns the average of the 50 sample sets taken. We plot this
+% average power spectrum here.
+fig = figure; 
+plot(20*log10(beamf_1))
+ylabel('Power (dB)')
+title('Averaged Spatial Spectrum: Beamforming method');
+xlabel('n')
+set(gcf, 'Position', get(0, 'Screensize'));
+saveas(fig,'./results/Q1/beamf_q1a.jpg','jpg');
+
+%% Q1 a) Capon Method
+%%
+% The function returns the average of the 50 sample sets taken. We plot this
+% average power spectrum here.
+fig = figure; 
+plot(20*log10(capon_1))
+ylabel('Power (dB)')
+title('Averaged Spatial Spectrum: Capon''s method');
+xlabel('n')
+set(gcf, 'Position', get(0, 'Screensize'));
+saveas(fig,'./results/Q1/capon_q1a.jpg','jpg');
+%% Q1 a) Root-Music Estimate
+%%
+% For Root-Music, we get an estimate for the direction of arrival. We see 
+% the spread of estimates by plotting the estimates from each data set with
+% the same height.
+fig = figure; 
+stem(root_theta_1(:), ones(100,1));
+title('Root-Music method')
+xlabel('Angle')
+set(gcf, 'Position', get(0, 'Screensize'));
+saveas(fig,'./results/Q1/rootmusic_q1a.jpg','jpg');
+%% Q1 a) ESPRIT Estimate
+%%
+% For ESPRIT, we get an estimate for the direction of arrival. We see 
+% the spread of estimates by plotting the estimates from each data set with
+% the same height.
+fig = figure; 
+stem(esprit_theta_1(:), ones(100,1));
+title('ESPRIT method')
+xlabel('Angle')
+set(gcf, 'Position', get(0, 'Screensize'));
+saveas(fig,'./results/Q1/esprit_q1a.jpg','jpg');
+%% Q1 b) Theta = 7.5
+[beamf_2,capon_2,root_theta_2,esprit_theta_2]=computeEstimates_q1(7.5);
+%% Q1 b) Beamforming Method
+%%
+% The function returns the average of the 50 sample sets taken. We plot this
+% average power spectrum here.
+fig = figure; 
+plot(20*log10(beamf_2))
+ylabel('Power (dB)')
+title('Averaged Spatial Spectrum: Beamforming method');
+xlabel('n')
+set(gcf, 'Position', get(0, 'Screensize'));
+saveas(fig,'./results/Q1/beamf_q1b.jpg','jpg');
+%% Q1 b) Capon Method
+%%
+% The function returns the average of the 50 sample sets taken. We plot this
+% average power spectrum here.
+fig = figure; 
+plot(20*log10(capon_2))
+ylabel('Power (dB)')
+title('Averaged Spatial Spectrum: Capon''s method');
+xlabel('n')
+set(gcf, 'Position', get(0, 'Screensize'));
+saveas(fig,'./results/Q1/capon_q1b.jpg','jpg');
+%% Q1 b) Root-Music Estimate
+%%
+% For Root-Music, we get an estimate for the direction of arrival. We see 
+% the spread of estimates by plotting the estimates from each data set with
+% the same height.
+fig = figure; 
+stem(root_theta_2(:), ones(100,1));
+title('Root-Music method')
+xlabel('Angle')
+set(gcf, 'Position', get(0, 'Screensize'));
+saveas(fig,'./results/Q1/rootmusic_q1b.jpg','jpg');
+%% Q1 b) ESPRIT Estimate
+%%
+% For ESPRIT, we get an estimate for the direction of arrival. We see 
+% the spread of estimates by plotting the estimates from each data set with
+% the same height.
+fig = figure; 
+stem(esprit_theta_2(:), ones(100,1));
+title('ESPRIT method')
+xlabel('Angle')
+set(gcf, 'Position', get(0, 'Screensize'));
+saveas(fig,'./results/Q1/esprit_q1b.jpg','jpg');
+%% Q1 Conclusions
+%%
+% $\theta$ *=15* degree
+%%
+% * Each method gives a satisfactory
+% result, i.e. the methods are able to resolve both the sources
+% successfully.
+%%
+% * The peaks in Capon's method are much sharper, leading to better estimate.
+%%
+% * Comparing Root Music and ESPRIT, The Root Music estimates are much closer
+%  together (implying less variance). The average value is also closer to
+%  the actual value in case of Root Music
+%%
+% * The properties of various time series estimators are rougly analogous to
+% the temporal case, with Capon better than Beamforming, and, RootMusic better
+% than ESPRIT
+
+%%
+% $\theta$ *=7.5* degree
+%%
+% * Beamforming is not able to resolve both the
+% sources, it gives a single peak. Even in Capon's method, the resolution
+% is not good. It gives, what appears to be a peak with 2 small humps on
+% top.
+%%
+% * Comparing Root Music and ESPRIT, The Root Music estimates are much closer
+% together (implying less variance). In general, the values are much widely spread as
+% compared to the previous value of theta=15.
+%%
+% * The properties of various time series estimators are rougly analogous to
+% the temporal case, with Capon better than Beamforming, and, Root Music better
+% than ESPRIT
+
+
+%% Question 2 : Spatial Spectral Estimators applied to Measured Data
+% Loading the data from file submarine.mat
+load('./data/submarine.mat');
+% We get the measurements from the six sensors (4096 instances), the
+% distance between sensors and the wavelength of the source.
+dl = d/lambda;
+%% Q2 Beamforming Method
+beamf = beamform(X, 180, dl);
+fig = figure; 
+plot(20*log10(beamf))
+title('Beamforming spatial spectrum')
+ylabel('Power (dB)')
+xlabel('angle+90deg')
+set(gcf, 'Position', get(0, 'Screensize'));
+saveas(fig,'./results/Q2/beamf_q2.jpg','jpg');
+%%
+% From the graphs we can see that there are 2 peaks implying 2 sources.
+%% Q2 Capon Method
+capon = capon_sp(X, 180, dl);
+fig = figure; 
+plot(20*log10(capon))
+title('Capon''s method spatial spectrum')
+ylabel('Power (dB)')
+xlabel('angle+90deg')
+set(gcf, 'Position', get(0, 'Screensize'));
+saveas(fig,'./results/Q2/capon_q2.jpg','jpg');
+%%
+% From the graphs we can see that there are 2 peaks implying 2 sources.
+%% Q2 Root-Music Estimate
+% Now, we use the no of sources (2) as input for the Root-Music method
+root_theta_q2 = root_music_doa(X, 2, dl)
+
+%% Q2 ESPRIT Estimate
+% Now, we use the no of sources (2) as input for the ESPRIT method
+esprit_theta_q2 = esprit_doa(X, 2, dl)
+
+%% Q2 Conclusion
+% The two submarines are located at angles of approx -36 degrees and 53
+% degrees respectively
+%% Written Assignment : Ques 2 
+% Plot for the beamforms for the L shaped array
+%%
+% <<Plots_written_Q2.jpg>>
+
+##### SOURCE END #####
+--></body></html>
